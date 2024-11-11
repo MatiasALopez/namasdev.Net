@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace namasdev.Net.Correos
 {
     public class ServidorDeCorreosParametros
     {
+        public ServidorDeCorreosParametros()
+        {
+        }
+
         public ServidorDeCorreosParametros(string host,
             int? puerto = null, NetworkCredential credenciales = null, bool? habilitarSsl = null,
             string remitente = null, string copiaOculta = null,
