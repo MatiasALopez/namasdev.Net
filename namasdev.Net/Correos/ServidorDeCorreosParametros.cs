@@ -13,12 +13,14 @@ namespace namasdev.Net.Correos
     {
         public ServidorDeCorreosParametros(string host,
             int? puerto = null, NetworkCredential credenciales = null, bool? habilitarSsl = null,
-            string copiaOculta = null, NameValueCollection headers = null)
+            string remitente = null, string copiaOculta = null, 
+            NameValueCollection headers = null)
         {
             Host = host;
             Puerto = puerto;
             Credenciales = credenciales;
             HabilitarSsl = habilitarSsl;
+            Remitente = remitente;
             CopiaOculta = copiaOculta;
             Headers = headers;
         }
@@ -27,6 +29,7 @@ namespace namasdev.Net.Correos
         public int? Puerto { get; set; }
         public NetworkCredential Credenciales { get; set; }
         public bool? HabilitarSsl { get; set; }
+        public string Remitente { get; set; }
         public string CopiaOculta { get; set; }
         public NameValueCollection Headers { get; set; }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Mail;
 
+using namasdev.Core.Validation;
+
 namespace namasdev.Net.Correos
 {
     public class ServidorDeCorreos : IServidorDeCorreos, IDisposable
@@ -44,28 +46,35 @@ namespace namasdev.Net.Correos
 
         public void EnviarCorreo(MailMessage correo)
         {
-            if (correo == null)
-                throw new ArgumentNullException("correo");
+            Validador.ValidarArgumentRequeridoYThrow(correo, nameof(correo));
 
+            EstablecerRemitent(correo);
             EstablecerHeaders(correo);
             EstablecerCopiaOculta(correo);
 
             _smtpClient.Send(correo);
         }
 
+        private void EstablecerRemitent(MailMessage correo)
+        {
+            if (correo.Sender == null
+                && !string.IsNullOrWhiteSpace(Parametros.Remitente))
+            {
+                correo.Sender = new MailAddress(Parametros.Remitente);
+            }
+        }
+
         private void EstablecerHeaders(MailMessage correo)
         {
-            if (Parametros.Headers == null)
+            if (Parametros.Headers != null)
             {
-                return;
+                correo.Headers.Add(Parametros.Headers);
             }
-
-            correo.Headers.Add(Parametros.Headers);
         }
 
         private void EstablecerCopiaOculta(MailMessage correo)
         {
-            if (Parametros.CopiaOculta != null)
+            if (!string.IsNullOrWhiteSpace(Parametros.CopiaOculta))
             {
                 correo.Bcc.Add(Parametros.CopiaOculta);
             }
