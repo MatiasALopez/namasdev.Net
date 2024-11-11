@@ -68,7 +68,10 @@ namespace namasdev.Net.Correos
         {
             if (Parametros.Headers != null)
             {
-                correo.Headers.Add(Parametros.Headers);
+                foreach (var header in Parametros.Headers)
+                {
+                    correo.Headers.Add(header.Key, header.Value);
+                }
             }
         }
 
