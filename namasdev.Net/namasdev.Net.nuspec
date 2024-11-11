@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>namasdev.Net</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>namasdev Net</title>
     <authors>Matias Alberto Lopez</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,8 +13,5 @@
     <releaseNotes></releaseNotes>
     <copyright>2024</copyright>
     <tags>namasdev</tags>
-    <dependencies>
-      <dependency id="namasdev.Core" version="1.0.1" />
-    </dependencies>
   </metadata>
 </package>
