@@ -30,5 +30,6 @@ namespace namasdev.Net.Correos
         public string Remitente { get; set; }
         public string CopiaOculta { get; set; }
         public IEnumerable<KeyValuePair<string, string>> Headers { get; set; }
+        public string PickupDirectory { get; set; }
     }
 }

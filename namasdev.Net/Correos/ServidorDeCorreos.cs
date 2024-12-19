@@ -26,21 +26,32 @@ namespace namasdev.Net.Correos
 
         private void InicializarSmtp()
         {
-            _smtpClient = new SmtpClient(Parametros.Host);
-
-            if (Parametros.Puerto.HasValue)
+            if (!string.IsNullOrWhiteSpace(Parametros.PickupDirectory))
             {
-                _smtpClient.Port = Parametros.Puerto.Value;
+                _smtpClient = new SmtpClient
+                {
+                    DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                    PickupDirectoryLocation = Parametros.PickupDirectory
+                };
             }
-
-            if (Parametros.Credenciales != null)
+            else
             {
-                _smtpClient.Credentials = Parametros.Credenciales;
-            }
+                _smtpClient = new SmtpClient(Parametros.Host);
 
-            if (Parametros.HabilitarSsl.HasValue)
-            {
-                _smtpClient.EnableSsl = Parametros.HabilitarSsl.Value;
+                if (Parametros.Puerto.HasValue)
+                {
+                    _smtpClient.Port = Parametros.Puerto.Value;
+                }
+
+                if (Parametros.Credenciales != null)
+                {
+                    _smtpClient.Credentials = Parametros.Credenciales;
+                }
+
+                if (Parametros.HabilitarSsl.HasValue)
+                {
+                    _smtpClient.EnableSsl = Parametros.HabilitarSsl.Value;
+                }
             }
         }
 
@@ -48,19 +59,19 @@ namespace namasdev.Net.Correos
         {
             Validador.ValidarArgumentRequeridoYThrow(correo, nameof(correo));
 
-            EstablecerRemitent(correo);
+            EstablecerRemitente(correo);
             EstablecerHeaders(correo);
             EstablecerCopiaOculta(correo);
 
             _smtpClient.Send(correo);
         }
 
-        private void EstablecerRemitent(MailMessage correo)
+        private void EstablecerRemitente(MailMessage correo)
         {
-            if (correo.Sender == null
+            if (correo.From == null
                 && !string.IsNullOrWhiteSpace(Parametros.Remitente))
             {
-                correo.Sender = new MailAddress(Parametros.Remitente);
+                correo.From = new MailAddress(Parametros.Remitente);
             }
         }
 
